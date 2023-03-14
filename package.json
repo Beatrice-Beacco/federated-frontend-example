@@ -1,0 +1,29 @@
+{
+  "name": "webpack-federated-demo",
+  "private": true,
+  "workspaces": [
+    "./packages/app-host",
+    "./packages/remote-reports",
+    "./packages/remote-library"
+  ],
+  "version": "0.0.0",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start": "concurrently \"lerna run --parallel start\"",
+    "start:types": "concurrently \"lerna run --parallel start:types\"",
+    "build": "lerna run build",
+    "serve": "lerna run --parallel serve",
+    "clean": "lerna run --parallel clean",
+    "e2e:ci": "yarn start & wait-on http-get://localhost:3001/ && npx cypress run --config-file ../cypress/config/cypress.config.ts --config '{\"supportFile\": \"../cypress/support/e2e.ts\"}' --spec \"./e2e/runAll*.cy.ts\" --browser=chrome"
+  },
+  "devDependencies": {
+    "concurrently": "7.3.0",
+    "lerna": "3.22.1",
+    "wait-on": "7.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "@lerna/bootstrap": "^6.5.1",
+    "recharts": "^2.4.3"
+  }
+}
